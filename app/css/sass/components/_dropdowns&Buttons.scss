@@ -1,0 +1,20 @@
+.main-btn {
+  border-radius: 50px;
+  background: $main-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  padding: 7px 33px;
+  width: fit-content;
+  cursor: pointer;
+  color: #fff !important;
+  font-size: 18px;
+  font-weight: 600;
+  outline: 0;
+  line-height: normal;
+  &.xl {
+    padding-left: 93px;
+      padding-right: 93px;
+  }
+}

@@ -1,0 +1,185 @@
+.swiper-landing {
+  height: calc(80vh);
+  position: relative;
+  .swiper-wrapper {
+    position: relative;
+    .swiper-slide {
+      position: relative;
+      .img-slider{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 99;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        @include maxWidth(sm) {
+          justify-content: center;
+        }
+        .box-intro {
+          padding-inline: 16px;
+          text-align: center;
+          margin: 0 10%;
+          .title {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 119.94px;
+            color: white;
+            margin-bottom: 1rem;
+          }
+          .des {
+            font-family: Cairo;
+            font-size: 26px;
+            font-weight: 500;
+            line-height: 37.48px;
+            text-align: start;
+            color: white;
+          }
+          .btn-shop {
+            font-weight: 700;
+            color: #fff;
+            background-color: transparent;
+            font-size: 14px;
+            padding: 1rem;
+            transition: 300ms;
+            border-radius: 30px;
+            border: 1px solid #fff;
+            &:hover {
+              background-color: #fff;
+              color: $main-color;
+            }
+          }
+
+          @include maxWidth(sm) {
+            text-align: center;
+            padding: 0;
+            .title {
+              font-size: 27px;
+              margin-bottom: 0rem;
+              line-height: 38.94px;
+            }
+            .des {
+              font-size: 12px;
+              line-height: 30px;
+              text-align: center;
+            }
+            .btns {
+              justify-content: center;
+              margin-top: 35px;
+            }
+          }
+        }
+      }
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        @include maxWidth(sm) {
+          object-fit: cover;
+        }
+      }
+    }
+  }
+  .pagination {
+    z-index: 1;
+    position: absolute;
+    gap: 5px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    .swiper-pagination-bullet {
+      border-radius: 2px;
+      opacity: 1 !important;
+      background-color: white !important;
+      height: 5px;
+      width: 30px;
+      &.swiper-pagination-bullet-active {
+        background-color: rgb(223 43 50 / 74%) !important;
+      }
+    }
+  }
+  .swiper-button-prev,
+  .swiper-button-next {
+    @include centering;
+    background-color: #382551;
+    border-radius: 50%;
+    width: 63px;
+    height: 63px;
+    color: #fff;
+    &::after {
+      font-size: 18px !important;
+      font-weight: bold;
+    }
+    @include maxWidth(sm) {
+      display: none;
+    }
+  }
+  .swiper-button-prev {
+    inset-inline-start: 1rem !important;
+    // &::after {
+    //   content: "\f054";
+    //   font-family: "FontAwesome";
+    // }
+  }
+  .swiper-button-next {
+    inset-inline-end: 1rem !important;
+    // &::after {
+    //   content: "\f053";
+    //   font-family: "FontAwesome";
+    // }
+  }
+}
+.product-slider {
+  height: fit-content;
+  padding: 10px 50px;
+  .swiper-button-prev,
+  .swiper-button-next {
+    @include centering;
+    background-color: #fff;
+    border-radius: 50%;
+    width: 63px;
+    height: 63px;
+    color: $main-color;
+    box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.2);
+    &::after {
+      font-size: 18px !important;
+      font-weight: bold;
+    }
+    @include maxWidth(sm) {
+      display: none;
+    }
+  }
+  .swiper-button-prev {
+    inset-inline-start: 1rem !important;
+
+    // &::after {
+    //   content: "\f054";
+    //   font-family: "FontAwesome";
+    // }
+  }
+  .swiper-button-next {
+    inset-inline-end: 1rem !important;
+    // &::after {
+    //   content: "\f053";
+    //   font-family: "FontAwesome";
+    // }
+  }
+}
+.main-ad {
+  margin: 50px 0;
+  img {
+    width: 100%;
+    height: auto;
+  }
+}

@@ -6,20 +6,38 @@ import {
   handleAddAuth,
   handleFetchUsers,
 } from "@/redux/actions/auth/authAction";
-
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { useRouter } from "next/navigation";
 export const FormSign = () => {
+  const [error, setError] = useState();
+  const [success, setSuccess] = useState();
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const fd = useRef();
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
   };
-  function handleAuth(e) {
+  async function handleAuth(e) {
     e.preventDefault();
     const formData = new FormData(fd.current);
     const data = Object.fromEntries(formData.entries());
-    handleAddAuth(data);
-     handleFetchUsers()
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+      setSuccess("User created successfully!");
+      console.log("User:", userCredential.user);
+
+      router.push("/");
+    } catch (err) {
+      setError(err.message);
+    }
+    // handleAddAuth(data);
+    //  handleFetchUsers()
   }
   return (
     <form
@@ -30,8 +48,10 @@ export const FormSign = () => {
       onSubmit={handleAuth}
     >
       <div className="text-center mb-5">
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        {success && <p style={{ color: "green" }}>{success}</p>}
         <Image
-          src="/taka.svg"
+          src="/logo.svg"
           alt="كوكبة التقنية"
           className="img-fluid mb-4"
           style={{ maxWidth: "150px" }}

@@ -19,7 +19,7 @@ export default function Login() {
 
             <div>
               <Image
-                src="/taka.svg" // قم بتغيير المسار حسب الحاجة
+                src="/logo.svg" // قم بتغيير المسار حسب الحاجة
                 alt="طلبات"
                 className="img-fluid mb-4"
                 style={{ maxWidth: "150px" }}

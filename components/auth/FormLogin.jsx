@@ -17,7 +17,7 @@ export const FormLogin = () => {
     >
       <div className="text-center mb-5">
         <Image
-          src="/taka.svg" 
+          src="/logo.svg" 
           alt="كوكبة التقنية"
           className="img-fluid mb-4"
           style={{ maxWidth: "150px" }}

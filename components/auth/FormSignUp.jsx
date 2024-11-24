@@ -23,19 +23,19 @@ export const FormSign = () => {
     e.preventDefault();
     const formData = new FormData(fd.current);
     const data = Object.fromEntries(formData.entries());
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password
-      );
-      setSuccess("User created successfully!");
-      console.log("User:", userCredential.user);
+    // try {
+    //   const userCredential = await createUserWithEmailAndPassword(
+    //     auth,
+    //     data.email,
+    //     data.password
+    //   );
+    //   setSuccess("User created successfully!");
+    //   console.log("User:", userCredential.user);
 
-      router.push("/");
-    } catch (err) {
-      setError(err.message);
-    }
+    //   router.push("/");
+    // } catch (err) {
+    //   setError(err.message);
+    // }
     // handleAddAuth(data);
     //  handleFetchUsers()
   }

@@ -2,12 +2,6 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  handleAddAuth,
-  handleFetchUsers,
-} from "@/redux/actions/auth/authAction";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 export const FormSign = () => {
   const [error, setError] = useState();
@@ -24,21 +18,6 @@ export const FormSign = () => {
     const formData = new FormData(fd.current);
     const data = Object.fromEntries(formData.entries());
     console.log(data)
-    // try {
-    //   const userCredential = await createUserWithEmailAndPassword(
-    //     auth,
-    //     data.email,
-    //     data.password
-    //   );
-    //   setSuccess("User created successfully!");
-    //   console.log("User:", userCredential.user);
-
-    //   router.push("/");
-    // } catch (err) {
-    //   setError(err.message);
-    // }
-    // handleAddAuth(data);
-    //  handleFetchUsers()
   }
   return (
     <form

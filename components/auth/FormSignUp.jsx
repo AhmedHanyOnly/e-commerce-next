@@ -23,6 +23,7 @@ export const FormSign = () => {
     e.preventDefault();
     const formData = new FormData(fd.current);
     const data = Object.fromEntries(formData.entries());
+    console.log(data)
     // try {
     //   const userCredential = await createUserWithEmailAndPassword(
     //     auth,

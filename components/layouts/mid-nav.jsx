@@ -1,22 +1,23 @@
 import Image from "next/image";
+import CartHolder, { Cart } from "../ui/cart";
 
 const MidNavbar = () => {
   return (
     <nav className="navbar bottom-nav navbar-expand-lg hidden lg:block">
       <div className="container gap-5">
         <span className="logo">
-          <Image src="/logo.svg" alt="Logo" width={100} height={40} />
+          <Image src="/img/logo.svg" alt="Logo" width={100} height={40} />
         </span>
         <div className="inp-search relative">
           <input
             type="text"
-            className="w-full px-4 pe-4 py-2 border rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 w-full px-4 py-2 border rounded-md"
+            className=""
             placeholder="كلمة البحث"
           />
           <Image
-            src="/search.svg"
+            src="/img/search.svg"
             alt="Search"
-            className="absolute top-2 right-2 w-5 h-5"
+            className="search"
             width={100}
             height={50}
           />
@@ -28,7 +29,7 @@ const MidNavbar = () => {
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <Image src="/user.svg" alt="User" width={20} height={20} />
+              <Image src="/img/user.svg" alt="User" width={20} height={20} />
               حسابي
             </button>
             <ul className="dropdown-menu absolute hidden bg-white shadow-lg rounded-md py-2">
@@ -49,15 +50,8 @@ const MidNavbar = () => {
               </li>
             </ul>
           </div>
-          <a href="#" className="btn-cart flex items-center gap-2">
-            <div className="icon-holder relative">
-              <span className="count absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2 py-1">
-                0
-              </span>
-              <Image src="/cart.svg" alt="Cart" width={20} height={20} />
-            </div>
-            <span>500.00 ر.س</span>
-          </a>
+      <CartHolder/>
+         
         </div>
       </div>
     </nav>

@@ -11,6 +11,7 @@ import { fetchProducts, productsAction } from "@/redux/reducers/productSlice";
 import { useEffect } from "react";
 import { handleFetchProducts } from "@/redux/actions/product/productAction";
 import { url } from "@/redux/type";
+import Link from "next/link";
 
 const ProductsSlider = () => {
   const dispatch = useDispatch();
@@ -18,24 +19,24 @@ const ProductsSlider = () => {
   const loading = useSelector((state) => state.products.loading);
   const error = useSelector((state) => state.products.error);
   useEffect(() => {
-    async function handleFetchProducts (){
+    async function handleFetchProducts() {
       try {
-        dispatch(productsAction.setLoading(true)) 
-        const response = await fetch(`${url}/products`)
-        console.log('fetch succeed products')
-    
+        dispatch(productsAction.setLoading(true));
+        const response = await fetch(`${url}/products`);
+        console.log("fetch succeed products");
+
         if (!response.ok) {
-        throw new Error ('error in url fetching')
+          throw new Error("error in url fetching");
         }
-        const data = await response.json()
-        dispatch(productsAction.setProducts(data)) 
+        const data = await response.json();
+        dispatch(productsAction.setProducts(data));
       } catch (error) {
-        dispatch(productsAction.setError(error.message)) 
-      } finally{
-        dispatch(productsAction.setLoading(false)) 
+        dispatch(productsAction.setError(error.message));
+      } finally {
+        dispatch(productsAction.setLoading(false));
       }
     }
-    handleFetchProducts()
+    handleFetchProducts();
   }, [dispatch]);
 
   if (loading) {
@@ -64,25 +65,27 @@ const ProductsSlider = () => {
       >
         {products.map((product) => (
           <SwiperSlide className="swiper-slide" key={product.id}>
-            <div className="box-product">
-              <button className="love-product">
-                <i className="fa-regular fa-heart"></i>
-              </button>
-              <Image
-                width={100}
-                height={100}
-                src={product.image}
-                className="img-product"
-                alt="img"
-              />
-              <div className="text">
-                <div className="title">{product.title}</div>
-                <div className="price">
-                  <div className="num">{product.price}</div>
-                  ر.س
+            <Link href={`/products/232`}>
+              <div className="box-product">
+                <button className="love-product">
+                  <i className="fa-regular fa-heart"></i>
+                </button>
+                <Image
+                  width={100}
+                  height={100}
+                  src={product.image}
+                  className="img-product"
+                  alt="img"
+                />
+                <div className="text">
+                  <div className="title">{product.title}</div>
+                  <div className="price">
+                    <div className="num">{product.price}</div>
+                    ر.س
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>

@@ -20,22 +20,22 @@ export default function Sign() {
 
             <div>
               <Image
-                src="/logo.svg" // قم بتغيير المسار حسب الحاجة
+                src="/img/logo.svg" // قم بتغيير المسار حسب الحاجة
                 alt="طلبات"
                 className="img-fluid mb-4"
                 style={{ maxWidth: "150px" }}
                 width={150}
                 height={150}
               />
-              <h1 className="display-4 fw-bold mb-2 animate__animated animate__fadeInDown">
-                طلباتك
+                 <h1 className="display-4 fw-bold mb-2 animate__animated animate__fadeInDown">
+                متجر ستور
               </h1>
               <p className="lead mb-5 animate__animated animate__fadeInUp">
-                أحدث تقنيات صيانة السيارات لضمان قيادة آمنة ومريحة
+                جميع منتاجك في مكان واحد اطلب الان
               </p>
             </div>
             <p className="h5 fw-bold animate__animated animate__fadeInUp animate__delay-1s">
-              سياقتك تستحق الأفضل. ثق بنا لصيانة سيارتك وابقَ على الطريق بأمان
+              شركة سعودية
             </p>
           </div>
           <div className="col-lg-6 p-5">

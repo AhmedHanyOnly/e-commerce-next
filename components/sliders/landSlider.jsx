@@ -30,7 +30,7 @@ const LandSlider = () => {
         {/* شريحة 1 */}
         <SwiperSlide>
           <div className="swiper-slide">
-            <Image src="/slider-2.jpg" className="img-slider" fill alt="Slide Image" />
+            <Image src="/img/slider.png" className="img-slider" fill alt="Slide Image" />
             <div className="container">
               <div className="box-intro">
                 <p className="title" data-swiper-parallax="-1000">
@@ -50,7 +50,7 @@ const LandSlider = () => {
         </SwiperSlide>
         <SwiperSlide>
           <div className="swiper-slide">
-            <Image src="/slider-2.jpg" className="img-slider" fill alt="Slide Image" />
+            <Image src="/img/slider.png" className="img-slider" fill alt="Slide Image" />
             <div className="container">
               <div className="box-intro">
                 <p className="title" data-swiper-parallax="-1000">
@@ -70,7 +70,7 @@ const LandSlider = () => {
         </SwiperSlide>
         <SwiperSlide>
           <div className="swiper-slide">
-            <Image src="/slider-2.jpg" className="img-slider" fill alt="Slide Image" />
+            <Image src="/img/slider.png" className="img-slider" fill alt="Slide Image" />
             <div className="container">
               <div className="box-intro">
                 <p className="title" data-swiper-parallax="-1000">

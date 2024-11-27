@@ -31,7 +31,7 @@ export const FormSign = () => {
         {error && <p style={{ color: "red" }}>{error}</p>}
         {success && <p style={{ color: "green" }}>{success}</p>}
         <Image
-          src="/logo.svg"
+          src="/img/logo.svg"
           alt="كوكبة التقنية"
           className="img-fluid mb-4"
           style={{ maxWidth: "150px" }}
@@ -39,7 +39,7 @@ export const FormSign = () => {
           height={150}
         />
         <h2 className="h3 fw-bold mb-2">مرحبا بك</h2>
-        <p className="text-muted">أدخل البريد الالكتروني وكلمة السر للدخول</p>
+        <p className="text-muted">أدخل بياناتك الانشاء حسابك  </p>
       </div>
       <div className="mb-4">
         <label htmlFor="email" className="form-label">

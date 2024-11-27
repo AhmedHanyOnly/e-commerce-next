@@ -78,12 +78,17 @@
       padding: 14px;
       box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.1);
       border: 0;
+      // padding-inline-start: 50px;
+      width: 100%;
     }
     .search {
       position: absolute;
       inset-inline-end: 20px;
       top: 50%;
       transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
     }
   }
   .btn-nav-holder {

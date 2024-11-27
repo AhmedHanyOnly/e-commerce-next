@@ -7,7 +7,7 @@ const BottomNabar = () => {
       <div className="container">
         <ul className="navbar-nav mb-2 mb-lg-0 flex space-x-4">
           <li className="nav-item">
-            <Link className="nav-link text-gray-800 hover:text-blue-600" href="#">
+            <Link  className="nav-link text-gray-800 hover:text-blue-600" href="/">
               الرئيسية
             </Link>
           </li>
@@ -27,8 +27,8 @@ const BottomNabar = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link text-gray-800 hover:text-blue-600" href="#">
-              المتاجر
+            <Link className="nav-link text-gray-800 hover:text-blue-600" href="/category">
+              الاقسام
             </Link>
           </li>
           <li className="nav-item">

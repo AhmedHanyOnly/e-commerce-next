@@ -9,9 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.3.4",
-    "@fortawesome/fontawesome-free": "^6.7.1",
-    "@fortawesome/fontawesome-svg-core": "^6.7.1",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
     "@radix-ui/react-accordion": "^1.2.1",
@@ -22,7 +19,6 @@
     "@reduxjs/toolkit": "^2.3.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "firebase": "^11.0.2",
     "lucide-react": "^0.460.0",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",

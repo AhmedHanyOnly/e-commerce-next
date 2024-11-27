@@ -2,18 +2,7 @@ import localFont from "next/font/local";
 import "./css/main.css";
 import "./style.css";
 import "./css/swiper-bundle.min.css";
-import {
-  ClerkProvider,
-  SignedIn,
-  SignedOut,
-  SignIn,
-  SignInButton,
-  UserButton,
-} from "@clerk/nextjs";
 import { ProviderStore } from "@/redux/provider";
-import TopNavbar from "@/components/layouts/top-nav";
-import MidNavbar from "@/components/layouts/mid-nav";
-import BottomNabar from "@/components/layouts/bottom-nav";
 import Navbar from "@/components/layouts/navbar";
 
 const cairo = localFont({
@@ -50,30 +39,3 @@ export default function RootLayout({ children }) {
 
 
 
-{/* <ClerkProvider>
-<html lang="ar" dir="rtl">
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
-
-  <body className={`${cairo.variable} h-100`}>
-    <header className=" flex items-center justify-between p-2">
-      <h6>title</h6>
-      <UserButton />
-    </header>
-    <div className="flex justify-center ">
-      <SignedOut>
-        <SignIn routing="hash" />
-      </SignedOut>
-    </div>
-    <SignedIn>
-      <main>{children}</main>
-    </SignedIn>
-  </body>
-</html>
-</ClerkProvider> */}

@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
-import "./css/main.css";
+import "@/style/main.css";
 import "./style.css";
-import "./css/swiper-bundle.min.css";
+import "@/style/swiper-bundle.min.css";
 import { ProviderStore } from "@/redux/provider";
 import Navbar from "@/components/layouts/navbar";
 
@@ -17,9 +17,10 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
   return (
-      <html lang="ar" dir="rtl">
-        <body className={`${cairo.variable} h-100`}>
+    <html lang="ar" dir="rtl">
+      <body className={`${cairo.variable} h-100`}>
         <link
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
           rel="stylesheet"
@@ -29,13 +30,10 @@ export default function RootLayout({ children }) {
           href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
         />
         <ProviderStore>
-        <Navbar/>
-            <main>{children}</main>
+          <Navbar />
+          <main>{children}</main>
         </ProviderStore>
-        </body>
-      </html>
+      </body>
+    </html>
   );
 }
-
-
-

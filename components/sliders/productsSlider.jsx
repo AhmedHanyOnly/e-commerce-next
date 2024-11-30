@@ -56,16 +56,29 @@ const ProductsSlider = () => {
         effect="fade"
         loop={true}
         spaceBetween={10}
-        slidesPerView={4.5}
         navigation
         autoplay={{
           delay: 2500,
           disableOnInteraction: false,
         }}
+        breakpoints={{
+          1200: {
+            slidesPerView: 4.5,
+          },
+          768: {
+            slidesPerView: 2.5,
+          },
+          480: {
+            slidesPerView: 1.5,
+          },
+          0: {
+            slidesPerView: 1,
+          },
+        }}
       >
         {products.map((product) => (
           <SwiperSlide className="swiper-slide" key={product.id}>
-            <Link href={`/products/232`}>
+            <Link href={`/products/${product.id}`}>
               <div className="box-product">
                 <button className="love-product">
                   <i className="fa-regular fa-heart"></i>

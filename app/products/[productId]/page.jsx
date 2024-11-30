@@ -1,12 +1,47 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useState } from "react";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import { useSelector } from "react-redux";
+import { useParams } from "next/navigation";
+import { url } from "@/redux/type";
 
 const ProductShow = () => {
+  const { productId } = useParams();
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const products = useSelector((state) => state.products.items);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [product, setProduct] = useState(null);
+  useEffect(() => {
+    async function handleFetchProducts() {
+      try {
+        setLoading(true);
+        const response = await fetch(`${url}/products/${productId}`);
+        console.log("fetch succeed product");
+        if (!response.ok) {
+          throw new Error("error in url fetching");
+        }
+        const data = await response.json();
+        setProduct(data);
+        console.log(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    handleFetchProducts();
+  }, []);
+  useEffect(() => {
+    if (!thumbsSwiper) {
+      setThumbsSwiper(null);
+    }
+  }, [thumbsSwiper]);
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div className="error-message">Error: {error}</div>;
 
   return (
     <section className="main-section show-product ">
@@ -19,65 +54,35 @@ const ProductShow = () => {
                 "--swiper-pagination-color": "#fff",
               }}
               spaceBetween={10}
-              thumbs={{ swiper: thumbsSwiper }}
+              thumbs={thumbsSwiper ? { swiper: thumbsSwiper } : null}
               modules={[FreeMode, Thumbs]}
               className="mySwiper2 productSwiper2"
             >
-              <SwiperSlide>
-                <div className="main">
-                  <Image
-                    src="https://swiperjs.com/demos/images/nature-1.jpg"
-                    className="img"
-                    alt="main-img"
-                    width={100}
-                    height={100}
-                  />
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="main">
-                  <Image
-                    src="https://swiperjs.com/demos/images/nature-2.jpg"
-                    className="img"
-                    alt="main-img"
-                    width={100}
-                    height={100}
-                  />
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="main">
-                  <Image
-                    src="https://swiperjs.com/demos/images/nature-3.jpg"
-                    className="img"
-                    alt="main-img"
-                    width={100}
-                    height={100}
-                  />
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="main">
-                  <Image
-                    src="https://swiperjs.com/demos/images/nature-4.jpg"
-                    className="img"
-                    alt="main-img"
-                    width={100}
-                    height={100}
-                  />
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="main">
-                  <Image
-                    src="https://swiperjs.com/demos/images/nature-5.jpg"
-                    className="img"
-                    alt="main-img"
-                    width={100}
-                    height={100}
-                  />
-                </div>
-              </SwiperSlide>
+              {product?.image ? (
+                <SwiperSlide>
+                  <div className="main">
+                    <Image
+                      src={product?.image}
+                      className="img"
+                      alt="main-img"
+                      width={100}
+                      height={100}
+                    />
+                  </div>
+                </SwiperSlide>
+              ) : (
+                <SwiperSlide>
+                  <div className="main">
+                    <Image
+                      src="/img/no-image.jpeg"
+                      className="img"
+                      alt="main-img"
+                      width={100}
+                      height={100}
+                    />
+                  </div>
+                </SwiperSlide>
+              )}
             </Swiper>
             <Swiper
               onSwiper={setThumbsSwiper}
@@ -88,122 +93,43 @@ const ProductShow = () => {
               modules={[FreeMode, Thumbs]}
               className="mySwiper productSwiper "
             >
-              <SwiperSlide>
-                <div className="other">
-                  <Image
-                    src="https://swiperjs.com/demos/images/nature-1.jpg"
-                    className="img"
-                    width={100}
-                    height={100}
-                    alt="ss"
-                  />
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="other">
-                  <Image
-                    src="https://swiperjs.com/demos/images/nature-2.jpg"
-                    className="img"
-                    width={100}
-                    height={100}
-                    alt="ss"
-                  />
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="other">
-                  <Image
-                    src="https://swiperjs.com/demos/images/nature-3.jpg"
-                    className="img"
-                    width={100}
-                    height={100}
-                    alt="ss"
-                  />
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="other">
-                  <Image
-                    src="https://swiperjs.com/demos/images/nature-4.jpg"
-                    className="img"
-                    width={100}
-                    height={100}
-                    alt="ss"
-                  />
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="other">
-                  <Image
-                    src="https://swiperjs.com/demos/images/nature-5.jpg"
-                    className="img"
-                    width={100}
-                    height={100}
-                    alt="ss"
-                  />
-                </div>
-              </SwiperSlide>
+              {product?.image ? (
+                <SwiperSlide>
+                  <div className="other">
+                    <Image
+                      src={product?.image}
+                      className="img"
+                      width={100}
+                      height={100}
+                      alt={product?.image}
+                    />
+                  </div>
+                </SwiperSlide>
+              ) : (
+                <SwiperSlide>
+                  <div className="other">
+                    <Image
+                      src="/img/no-image.jpeg"
+                      className="img"
+                      width={100}
+                      height={100}
+                      alt="no-image"
+                    />
+                  </div>
+                </SwiperSlide>
+              )}
             </Swiper>
-            {/* <Swiper modules={[Thumbs]} className="swiper thumb-swiper">
-                  <SwiperSlide>
-                    <div className="other">
-                      <a
-                        href="/front-asset/img/image-preview.webp"
-                        data-fancybox="gallery"
-                        data-caption="اسم المنتج"
-                      >
-                        <Image
-                          loading="lazy"
-                          src="/front-asset/img/image-preview.webp"
-                          alt="اسم المنتج"
-                          className="img"
-                          width={200}
-                          height={200}
-                        />
-                      </a>
-                    </div>
-                  </SwiperSlide>
-                </Swiper> */}
           </div>
 
           <div className="col-12 col-md-6">
             <div className="data-product">
               <div className="info">
                 <div className="d-flex align-items-center justify-content-between">
-                  <div className="name mb-3">
-                    بطارية راف باور بسعة 14000 ملي امبير بقوة 30 واط بمنفذين
-                    تايب سي بي دي ومنفذ يو اس بي - اسود
-                  </div>
-                  {/* <div className="buttons-options">
-                    <button
-                      type="button"
-                      className="btn-icon-pr favorites active"
-                    >
-                      <i className="fas fa-heart"></i>
-                    </button>
-                    <button
-                      type="button"
-                      id="btn-shere"
-                      className="btn-icon-pr share"
-                    >
-                      <i className="fa-solid fa-share-from-square"></i>
-                    </button>
-                  </div> */}
+                  <div className="name mb-3">{product?.title}</div>
                 </div>
-                {/* <div className="rate">
-                  <span>التقييم</span>
-                  <div className="stars">
-                    <i className="fa-solid fa-star"></i>
-                    <i className="fa-solid fa-star"></i>
-                    <i className="fa-solid fa-star"></i>
-                    <i className="fa-solid fa-star"></i>
-                    <i className="fa-solid fa-star"></i>
-                  </div>
-                </div> */}
+
                 <div className="desc-product mb-3">
-                  بطارية راف باور بسعة 14000 ملي امبير بقوة 30 واط بمنفذين تايب
-                  سي بي دي ومنفذ يو اس بي - اسود وصف المنتج: استمتع بشحن محمول
-                  قوي وموثوق به مع بطارية م...
+                  {product?.description.slice(0, 100) + "..."}
                   <Link href="#description" className="fw-bold text-slate-700">
                     عرض المزيد
                   </Link>
@@ -216,7 +142,7 @@ const ProductShow = () => {
                   <button className="decrement">-</button>
                 </div>
                 <div className="d-flex gap-3">
-                  <div className="price-gl">200 د.ل</div>
+                  <div className="price-gl"> {product?.price} ر.س</div>
                 </div>
               </div>
               <div className="control-btn">
@@ -253,7 +179,7 @@ const ProductShow = () => {
         <div className="main-tabs " id="description">
           <button className="nav-link active">تفاصيل المنتج</button>
         </div>
-        <div className=" main-tab-content ">الوصف الوصف الوصف</div>
+        <div className=" main-tab-content "> {product?.description}</div>
 
         <div>
           <h5 className="main-title">منتجات ذات صلة</h5>
@@ -265,38 +191,54 @@ const ProductShow = () => {
               effect="fade"
               loop={true}
               spaceBetween={10}
-              slidesPerView={4.5}
               navigation
               autoplay={{
                 delay: 2500,
                 disableOnInteraction: false,
               }}
+              breakpoints={{
+                1200: {
+                  slidesPerView: 4.5,
+                },
+                768: {
+                  slidesPerView: 2.5,
+                },
+                480: {
+                  slidesPerView: 1.5,
+                },
+                0: {
+                  slidesPerView: 1,
+                },
+              }}
             >
-              <SwiperSlide className="swiper-slide" >
-                <Link href={`/products/232`}>
-                  <div className="box-product">
-                    <button className="love-product">
-                      <i className="fa-regular fa-heart"></i>
-                    </button>
-                    <Image
-                      width={100}
-                      height={100}
-                      src='/img/product.webp'
-                      className="img-product"
-                      alt="img"
-                    />
-                    <div className="text">
-                      <div className="title">
-                        Mens Casual Premium Slim Fit T-Shirts{" "}
-                      </div>
-                      <div className="price">
-                        <div className="num">22.3 </div>
-                        ر.س
+              {products.map((item) => (
+                <SwiperSlide className="swiper-slide" key={item.id}>
+                  <Link href={`/products/${item.id}`}>
+                    <div className="box-product">
+                      <button
+                        className="love-product"
+                        aria-label="Add to Wishlist"
+                      >
+                        <i className="fa-regular fa-heart"></i>
+                      </button>
+                      <Image
+                        width={100}
+                        height={100}
+                        src={item.image || "/img/no-image.jpeg"} 
+                        className="img-product"
+                        alt={item.title || "Product Image"}
+                      />
+                      <div className="text">
+                        <div className="title">{item?.title || "No Title"}</div>
+                        <div className="price">
+                          <div className="num">{item?.price || "0.00"}</div>
+                          <span>ر.س</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              </SwiperSlide>
+                  </Link>
+                </SwiperSlide>
+              ))}
             </Swiper>
           </div>
         </div>

@@ -4,12 +4,33 @@
   box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.1);
   position: relative;
   padding: 20px;
+  overflow: hidden;
   .love-product {
     position: absolute;
     top: 16px;
     inset-inline-end: 16px;
     font-size: 24px;
-    background-color: #fff;
+  }
+  .btn-add {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    inset-inline-end: 16px;
+    font-size: 24px;
+    background-color: $main-color;
+    color: #fff;
+    width: 50px;
+    height: 40px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inset-inline-end: -100px;
+    border-radius: 0 10px 10px 0;
+    transition: 300ms ease-in-out all;
+    @include maxWidth(sm){
+      inset-inline-end: 0;
+    }
   }
   .img-product {
     width: 100%;
@@ -40,6 +61,11 @@
         font-weight: 500;
         line-height: 30px;
       }
+    }
+  }
+  &:hover {
+    .btn-add {
+      inset-inline-end: 0;
     }
   }
 }

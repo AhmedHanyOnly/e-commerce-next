@@ -1,1 +1,1 @@
-export const url = 'https://fakestoreapi.com'
+export const url = 'http://localhost:3000'

@@ -17,7 +17,6 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-
   return (
     <html lang="ar" dir="rtl">
       <body className={`${cairo.variable} h-100`}>
@@ -33,6 +32,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           <main>{children}</main>
         </ProviderStore>
+
       </body>
     </html>
   );

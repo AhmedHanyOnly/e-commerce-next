@@ -3,17 +3,13 @@ import CartHolder, { Cart } from "../ui/cart";
 
 const MidNavbar = () => {
   return (
-    <nav className="navbar bottom-nav navbar-expand-lg hidden lg:block">
-      <div className="container gap-5">
-        <span className="logo">
+    <nav className="navbar bottom-nav navbar-expand-lg ">
+      <div className="container gap-5 flex-col md:flex-row justify-stretch">
+        <span className="logo hidden md:block">
           <Image src="/img/logo.svg" alt="Logo" width={100} height={40} />
         </span>
-        <div className="inp-search relative">
-          <input
-            type="text"
-            className=""
-            placeholder="كلمة البحث"
-          />
+        <div className="inp-search relative w-100 ">
+          <input type="text" className="" placeholder="كلمة البحث" />
           <Image
             src="/img/search.svg"
             alt="Search"
@@ -50,8 +46,7 @@ const MidNavbar = () => {
               </li>
             </ul>
           </div>
-      <CartHolder/>
-         
+          <CartHolder />
         </div>
       </div>
     </nav>

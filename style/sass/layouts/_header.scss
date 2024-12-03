@@ -137,6 +137,9 @@
 .menu-nav {
   background-color: $main-color;
   padding: 14px;
+  .container {
+    display: flex;
+  }
   .navbar-nav {
     display: flex;
     justify-content: start;

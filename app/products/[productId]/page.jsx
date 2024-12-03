@@ -7,6 +7,7 @@ import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import { useSelector } from "react-redux";
 import { useParams } from "next/navigation";
 import { url } from "@/redux/type";
+import BoxProduct from "@/components/boxes/box-product";
 
 const ProductShow = () => {
   const { productId } = useParams();
@@ -211,32 +212,9 @@ const ProductShow = () => {
                 },
               }}
             >
-              {products.map((item) => (
-                <SwiperSlide className="swiper-slide" key={item.id}>
-                  <Link href={`/products/${item.id}`}>
-                    <div className="box-product">
-                      <button
-                        className="love-product"
-                        aria-label="Add to Wishlist"
-                      >
-                        <i className="fa-regular fa-heart"></i>
-                      </button>
-                      <Image
-                        width={100}
-                        height={100}
-                        src={item.image || "/img/no-image.jpeg"} 
-                        className="img-product"
-                        alt={item.title || "Product Image"}
-                      />
-                      <div className="text">
-                        <div className="title">{item?.title || "No Title"}</div>
-                        <div className="price">
-                          <div className="num">{item?.price || "0.00"}</div>
-                          <span>ر.س</span>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
+              {products.map((product) => (
+                <SwiperSlide className="swiper-slide" key={product.id}>
+                  <BoxProduct  product={product} />
                 </SwiperSlide>
               ))}
             </Swiper>

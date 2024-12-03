@@ -1,7 +1,6 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -12,6 +11,7 @@ import { useEffect } from "react";
 import { handleFetchProducts } from "@/redux/actions/product/productAction";
 import { url } from "@/redux/type";
 import Link from "next/link";
+import BoxProduct from "../boxes/box-product";
 
 const ProductsSlider = () => {
   const dispatch = useDispatch();
@@ -78,27 +78,7 @@ const ProductsSlider = () => {
       >
         {products.map((product) => (
           <SwiperSlide className="swiper-slide" key={product.id}>
-            <Link href={`/products/${product.id}`}>
-              <div className="box-product">
-                <button className="love-product">
-                  <i className="fa-regular fa-heart"></i>
-                </button>
-                <Image
-                  width={100}
-                  height={100}
-                  src={product.image}
-                  className="img-product"
-                  alt="img"
-                />
-                <div className="text">
-                  <div className="title">{product.title}</div>
-                  <div className="price">
-                    <div className="num">{product.price}</div>
-                    ر.س
-                  </div>
-                </div>
-              </div>
-            </Link>
+            <BoxProduct product={product}/>
           </SwiperSlide>
         ))}
       </Swiper>

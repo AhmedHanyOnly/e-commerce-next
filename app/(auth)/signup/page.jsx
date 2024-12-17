@@ -1,10 +1,12 @@
 
+'use client'
+import { checkLogin } from "@/app/unit";
 import { FormLogin } from "@/components/auth/FormLogin";
 import { FormSign } from "@/components/auth/FormSignUp";
 import Image from "next/image";
 
 export default function Sign() {
-
+  checkLogin()
 
   return (
     <div className="login-container">

@@ -3,9 +3,9 @@ import { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { url } from "@/redux/type";
 export const FormSign = () => {
-  const [error, setError] = useState();
-  const [success, setSuccess] = useState();
+  const [error, setError] = useState([]);
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const fd = useRef();
@@ -17,8 +17,32 @@ export const FormSign = () => {
     e.preventDefault();
     const formData = new FormData(fd.current);
     const data = Object.fromEntries(formData.entries());
-    console.log(data)
+    // console.log(data)
+    try {
+      const response = await fetch(`${url}/auth/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      // if (!response.ok) {
+      //   throw new Error("error in url fetching");
+      // }
+      const dataUser = await response.json();
+      if (dataUser.errors) {
+        setError(dataUser.errors);
+      } else {
+        console.log("login success", dataUser);
+        localStorage.setItem("user-data", dataUser.data);
+        localStorage.setItem("token", dataUser.token);
+        router.push("/");
+      }
+    } catch (error) {
+      setError(error.message);
+    }
   }
+
   return (
     <form
       id="loginForm"
@@ -28,8 +52,13 @@ export const FormSign = () => {
       onSubmit={handleAuth}
     >
       <div className="text-center mb-5">
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {success && <p style={{ color: "green" }}>{success}</p>}
+        {error &&
+          error.map((error, index) => (
+            <p key={index} style={{ color: "red" }}>
+              {error.param} {error.msg}
+            </p>
+          ))}
+
         <Image
           src="/img/logo.svg"
           alt="كوكبة التقنية"
@@ -39,7 +68,7 @@ export const FormSign = () => {
           height={150}
         />
         <h2 className="h3 fw-bold mb-2">مرحبا بك</h2>
-        <p className="text-muted">أدخل بياناتك الانشاء حسابك  </p>
+        <p className="text-muted">أدخل بياناتك الانشاء حسابك </p>
       </div>
       <div className="mb-4">
         <label htmlFor="email" className="form-label">
@@ -109,28 +138,42 @@ export const FormSign = () => {
           </span>
         </div>
       </div>
-      <div className="mb-4 d-flex justify-content-between align-items-center">
-        <div className="form-check">
+      <div className="mb-4">
+        <label htmlFor="password" className="form-label">
+          تأكيد كلمة السر
+        </label>
+        <div className="input-group">
           <input
-            className="form-check-input"
-            type="checkbox"
-            id="remember"
-            name="remember"
+            type={showPassword ? "text" : "password"}
+            className="form-control"
+            id="passwordConfirm"
+            name="passwordConfirm"
+            placeholder="اعد ادخال كلمة المرور"
           />
-          <label className="form-check-label" htmlFor="remember">
-            تذكرني دائما
-          </label>
+          <span className="input-group-text" onClick={togglePassword}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              className="bi bi-eye"
+              viewBox="0 0 16 16"
+              style={{ cursor: "pointer" }}
+            >
+              <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+              <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+            </svg>
+          </span>
         </div>
-        <Link
-          href="/forgot-password"
-          className="text-primary text-decoration-none"
-        >
-          نسيت كلمة المرور؟
-        </Link>
       </div>
+
       <button type="submit" className="btn btn-primary w-100 py-2">
-        دخول
+        سجل معنا
       </button>
+      <div className="flex gap-2 justify-center p-3">
+        <span> لديك حساب بالفعل؟</span>
+        <Link href={"/login"}>سجل الدخول</Link>
+      </div>
     </form>
   );
 };

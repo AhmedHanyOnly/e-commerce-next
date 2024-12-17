@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -9,11 +9,69 @@ import {
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import BoxCart from "../boxes/box-cart";
+import { useDispatch, useSelector } from "react-redux";
+import { cartAction } from "@/redux/reducers/cartSlice";
+import { token, url } from "@/redux/type";
+import { handleFetchCart } from "@/redux/actions/cart/cartAction";
 function CartHolder() {
   const [open, setOpen] = useState(false);
-
-  // const handleClose = () => setShow(false);
+  const dispatch = useDispatch();
   const handleToggle = () => setOpen(!open);
+  const products = useSelector((state) => state.cart.items);
+  const loader = useSelector((state) => state.cart.loading);
+  const error = useSelector((state) => state.cart.error);
+  const totalPrice = useSelector((state) => state.cart.totalPrice);
+
+  async function handleFetchCart() {
+    try {
+      dispatch(cartAction.setLoading(true));
+      const response = await fetch(`${url}/cart`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("لا يوجد منتجات");
+      }
+      const data = await response.json();
+      // console.log(response);
+      dispatch(cartAction.setProducts(data.data.products));
+      dispatch(cartAction.setTotalPrice(data.data.totalCartPrice));
+    } catch (error) {
+      dispatch(cartAction.setError());
+    } finally {
+      dispatch(cartAction.setLoading(false));
+    }
+  }
+  async function handleClearCart() {
+    try {
+      dispatch(cartAction.setLoading(true)); // عرض حالة التحميل
+      const response = await fetch(`${url}/cart`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("لا يوجد منتجات");
+      }
+
+      dispatch(cartAction.setProducts([]));
+      dispatch(cartAction.setTotalPrice(0));
+      } catch (error) {
+      console.error(error.message);
+    } finally {
+      dispatch(cartAction.setLoading(false)); // إيقاف حالة التحميل
+    }
+  }
+
+  useEffect(() => {
+    handleFetchCart();
+  }, [dispatch]);
 
   return (
     <>
@@ -27,7 +85,6 @@ function CartHolder() {
             0
           </span>
           <Image src="/img/cart.svg" alt="Cart" width={20} height={20} />
-          
         </div>
         <span>500.00 ر.س</span>
       </button>
@@ -66,83 +123,23 @@ function CartHolder() {
 
                     <div className="mt-8">
                       <div className="flow-root">
+                        {error && (
+                          <div className="text-center h-100">{error}</div>
+                        )}
+                        {loader && (
+                          <div className="text-center h-100">جاري التحميل...</div>
+                        )}
                         <ul
                           role="list"
-                          className="-my-6 divide-y divide-gray-200"
+                          className="-my-6 divide-y divide-gray-200 p-0"
                         >
-                          <li className="cart-product">
-                            <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
-                              <Image
-                                alt="product"
-                                src="/img/product.webp"
-                                className="size-full object-contain"
-                                width={50}
-                                height={50}
-                              />
-                            </div>
-
-                            <div className="ml-4 flex flex-1 flex-col">
-                              <div>
-                                <div className="flex justify-between items-center text-base font-medium text-gray-900">
-                                <Link href="" className="title">اسم المنتج</Link>
-
-                                  <p className="m-0">100$</p>
-                                </div>
-                                <p className="my-1 text-sm text-gray-500">
-                                  احمر
-                                </p>
-                              </div>
-                              <div className="flex flex-1 items-end h-1 justify-between text-sm">
-                                <p className="text-gray-500 m-0">الكمية 2</p>
-
-                                <button
-                                    type="button"
-                                    className="font-medium main-color hover:text-red-500"
-                                  >
-                                    حذف
-                                  </button>
-                              </div>
-                            </div>
-                          </li>
-                          {/* {products.map((product) => (
-                            <li key={product.id} className="flex py-6">
-                              <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                <img
-                                  alt={product.imageAlt}
-                                  src={product.imageSrc}
-                                  className="size-full object-cover"
-                                />
-                              </div>
-
-                              <div className="ml-4 flex flex-1 flex-col">
-                                <div>
-                                  <div className="flex justify-between text-base font-medium text-gray-900">
-                                    <h3>
-                                      <a href={product.href}>{product.name}</a>
-                                    </h3>
-                                    <p className="ml-4">{product.price}</p>
-                                  </div>
-                                  <p className="mt-1 text-sm text-gray-500">
-                                    {product.color}
-                                  </p>
-                                </div>
-                                <div className="flex flex-1 items-end justify-between text-sm">
-                                  <p className="text-gray-500">
-                                    Qty {product.quantity}
-                                  </p>
-
-                                  <div className="flex">
-                                    <button
-                                      type="button"
-                                      className="font-medium text-indigo-600 hover:text-indigo-500"
-                                    >
-                                      Remove
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                            </li>
-                          ))} */}
+                          {products.map((item, index) => (
+                            <BoxCart
+                              product={item}
+                              key={index}
+                              handleFetchCart={handleFetchCart}
+                            />
+                          ))}
                         </ul>
                       </div>
                     </div>
@@ -151,7 +148,7 @@ function CartHolder() {
                   <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                     <div className="flex justify-between text-base font-medium text-gray-900">
                       <p>المجموع</p>
-                      <p>$262.00</p>
+                      <p>{totalPrice} ريال</p>
                     </div>
                     <p className="mt-0.5 text-sm text-gray-500">
                       يتم احتساب الشحن والضرائب عند الدفع.
@@ -168,10 +165,10 @@ function CartHolder() {
                       <p>
                         <button
                           type="button"
-                          onClick={handleToggle}
+                          onClick={handleClearCart}
                           className="font-medium text-indigo-600 main-color"
                         >
-                          مواصلة التسوق
+                          حذف عربة التسوق
                           <span aria-hidden="true"> &rarr;</span>
                         </button>
                       </p>

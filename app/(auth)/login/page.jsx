@@ -1,10 +1,10 @@
-
+'use client'
+import { checkLogin } from "@/app/unit";
 import { FormLogin } from "@/components/auth/FormLogin";
 import Image from "next/image";
 
 export default function Login() {
-
-
+  checkLogin()
   return (
     <div className="login-container">
       <div className="login-box animate__animated animate__fadeIn">

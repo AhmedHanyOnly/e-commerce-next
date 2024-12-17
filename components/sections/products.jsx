@@ -3,6 +3,7 @@ import ProductsSlider from "../sliders/productsSlider";
 
 
 const ProductsHolder = () => {
+  
   return (
     <section className="main-section">
       <div className="container">

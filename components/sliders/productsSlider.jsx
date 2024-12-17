@@ -23,13 +23,12 @@ const ProductsSlider = () => {
       try {
         dispatch(productsAction.setLoading(true));
         const response = await fetch(`${url}/products`);
-        console.log("fetch succeed products");
-
         if (!response.ok) {
           throw new Error("error in url fetching");
         }
         const data = await response.json();
-        dispatch(productsAction.setProducts(data));
+        // console.log("fetch succeed products", data);
+        dispatch(productsAction.setProducts(data.data));
       } catch (error) {
         dispatch(productsAction.setError(error.message));
       } finally {
@@ -46,7 +45,7 @@ const ProductsSlider = () => {
   if (error) {
     return <div>Error: {error}</div>;
   }
-  console.log(loading);
+  // console.log(loading);
   return (
     <div className="product-slider">
       <Swiper

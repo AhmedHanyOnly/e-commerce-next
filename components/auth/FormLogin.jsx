@@ -1,23 +1,60 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { url } from "@/redux/type";
+import { useRouter } from "next/navigation";
 
 export const FormLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
-
+  const [error, setError] = useState();
+  const fd = useRef();
+  const router = useRouter()
   const togglePassword = () => {
     setShowPassword(!showPassword);
   };
+  async function handleAuth(e) {
+    e.preventDefault();
+    const formData = new FormData(fd.current);
+    const data = Object.fromEntries(formData.entries());
+    // console.log(data)
+    try {
+      const response = await fetch(`${url}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      // if (!response.ok) {
+      //   throw new Error("error in url fetching");
+      // }
+      const dataUser = await response.json();
+      if (dataUser.errors){
+        setError(dataUser.errors)
+      } else{
+        console.log("login success", dataUser);
+        localStorage.setItem("user-data", dataUser.data);
+        localStorage.setItem("token", dataUser.token);
+        router.push("/");
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  }
   return (
     <form
+      onSubmit={handleAuth}
+      ref={fd}
       id="loginForm"
       method="post"
       className="animate__animated animate__fadeInRight"
     >
       <div className="text-center mb-5">
-        <Image
-          src="/img/logo.svg" 
+      {error && error.map((error, index)=> (
+          <p key={index} style={{ color: "red" }}>{error.param} {error.msg}</p>
+        ))}        <Image
+          src="/img/logo.svg"
           alt="كوكبة التقنية"
           className="img-fluid mb-4"
           style={{ maxWidth: "150px" }}
@@ -38,7 +75,7 @@ export const FormLogin = () => {
             id="email"
             name="email"
             placeholder="name@company.com"
-            required
+            
           />
           <span className="input-group-text">
             <svg
@@ -65,7 +102,7 @@ export const FormLogin = () => {
             id="password"
             name="password"
             placeholder="أدخل كلمة المرور"
-            required
+            
           />
           <span className="input-group-text" onClick={togglePassword}>
             <svg
@@ -105,6 +142,10 @@ export const FormLogin = () => {
       <button type="submit" className="btn btn-primary w-100 py-2">
         دخول
       </button>
+      <div className="flex gap-2 justify-center p-3">
+        <span>ليس لديك حساب؟</span>
+        <Link href={"/signup"}>سجل هنا</Link>
+      </div>
     </form>
   );
 };
